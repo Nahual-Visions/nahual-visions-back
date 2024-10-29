@@ -1,0 +1,26 @@
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: keycloak:8180/realms/nahual_visions/protocol/openid-connect/certs
+
+  data:
+    mongodb:
+      uri: mongodb://mongodb:27017/nahual-visions
+      username: peculiar
+      password: peculiar
+
+  datasource:
+      url: jdbc:postgresql://localhost:5432/nahual-visions
+      username: peculiar
+      driver-class-name: org.postgresql.Driver
+      password: peculiar
+  liquibase:
+    change-log: classpath:db/changelog-master.xml
+  ai:
+    openai:
+      api-key: YOUR_API_KEY
+
+server:
+  port: 8081
