@@ -70,10 +70,18 @@ services:
       KC_DB_PASSWORD: peculiar
       KC_BOOTSTRAP_ADMIN_USERNAME: admin
       KC_BOOTSTRAP_ADMIN_PASSWORD: admin
+      #KC_HTTP_ENABLED: true
+      #KC_HOSTNAME: bla.bla.com
+      KC_HOSTNAME_PORT: 8443
+      KC_HTTPS_CERTIFICATE_FILE: /etc/x509/https/certs.pem
+      KC_HTTPS_CERTIFICATE_KEY_FILE: /etc/x509/https/certs.key.pem
     command:
-      start-dev
+      ["start-dev"]
+    volumes:
+      - ~/keycloak/certs:/etc/x509/https
     ports:
-      - "8180:8080"
+      - "8080:8080"
+      - "8443:8443"
     depends_on:
       - postgres
     networks:
@@ -83,7 +91,7 @@ services:
 
 volumes:
   mon-data:
-#  me-data:
+  #  me-data:
   db-data:
   pgadmin:
 
