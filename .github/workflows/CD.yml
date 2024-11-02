@@ -2,7 +2,6 @@ name: Back CD
 
 on: 
   push:
-    types: [closed]
     branches:
       - master
   pull_request:
