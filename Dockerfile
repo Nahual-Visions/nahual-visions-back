@@ -1,4 +1,4 @@
-FROM maven:latest AS build
+FROM maven:3.9.9-ibmjava AS build
 COPY . /app
 WORKDIR /app
 RUN mvn dependency:purge-local-repository
