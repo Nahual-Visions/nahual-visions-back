@@ -55,5 +55,5 @@ jobs:
           MG_URI: ${{ secrets.MG_URI }}
           API_KEY: ${{ secrets.API_KEY }}
           USER: ${{ secrets.USER }}
-          USER: ${{ secrets.PASSWORD }}
+          PASSWORD: ${{ secrets.PASSWORD }}
         run: docker-compose up -d --force-recreate --no-deps --build back
