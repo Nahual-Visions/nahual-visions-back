@@ -26,7 +26,7 @@ public class WebSecurityConfiguration {
         return http.cors(AbstractHttpConfigurer::disable)
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(request -> {
-                    request.requestMatchers("/").permitAll();
+                    request.requestMatchers("/*").permitAll();
                     request.anyRequest().authenticated();
                 })
                 .oauth2ResourceServer(oAuth -> oAuth
