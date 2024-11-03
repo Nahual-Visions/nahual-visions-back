@@ -16,7 +16,7 @@ jobs:
 
   deploy:
     runs-on: self-hosted
-    if: ${{or github.event.pull_request.merged github.event.push}} 
+    if: ${{ github.event.pull_request.merged }} 
     needs: prepare-environment
     steps:
       - name: Up other services
