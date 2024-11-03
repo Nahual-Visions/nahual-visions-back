@@ -1,0 +1,55 @@
+name: Back CD
+
+on: 
+  pull_request:
+    types: [closed]
+    branches:
+      - master
+
+jobs:
+  prepare-environment:
+    runs-on: self-hosted
+    if: ${{ github.event.pull_request.merged }} 
+    steps:
+      - name: Checkout into App Back
+        uses: actions/checkout@v4
+
+  deploy:
+    runs-on: self-hosted
+    if: ${{ github.event.pull_request.merged }} 
+    needs: prepare-environment
+    steps:
+      - name: Up other services
+        env:
+          MONGO_INITDB_ROOT_USERNAME: ${{ secrets.USER }}
+          MONGO_INITDB_ROOT_PASSWORD: ${{ secrets.PASSWORD }}
+          
+          ME_CONFIG_MONGODB_SERVER: ${{ secrets.MG_SERVER }}
+          ME_CONFIG_MONGODB_ADMINUSERNAME: ${{ secrets.USER }}
+          ME_CONFIG_MONGODB_ADMINPASSWORD: ${{ secrets.PASSWORD }}
+          
+          PGADMIN_DEFAULT_EMAIL: ${{ secrets.PG_EMAIL }}
+          PGADMIN_DEFAULT_PASSWORD:  ${{ secrets.USER }}
+          
+          POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+          POSTGRES_USER: ${{ secrets.USER }} 
+          POSTGRES_PASSWORD: ${{ secrets.PASSWORD }} 
+          
+          
+          KC_DB_URL: ${{ secrets.DB_URL }}
+          KC_DB_USERNAME: ${{ secrets.USER }}
+          KC_DB_PASSWORD: ${{ secrets.PASSWORD }}
+          KC_BOOTSTRAP_ADMIN_USERNAME: ${{ secrets.ADMIN }}
+          KC_BOOTSTRAP_ADMIN_PASSWORD: ${{ secrets.ADMIN }}
+        run: docker compose up -d --scale back=0
+
+      - name: Recreate backend service
+        env:
+          DB_URL: ${{ secrets.DB_URL }}
+          JWK_SET_URI: ${{ secrets.JWK_SET_URI }}
+          ISSUER_URI: ${{ secrets.ISSUER_URI }}
+          MG_URI: ${{ secrets.MG_URI }}
+          API_KEY: ${{ secrets.API_KEY }}
+          USER: ${{ secrets.USER }}
+          PASSWORD: ${{ secrets.PASSWORD }}
+        run: docker compose up -d --force-recreate --no-deps --build back
