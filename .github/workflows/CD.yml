@@ -41,7 +41,7 @@ jobs:
           KC_DB_PASSWORD: ${{ secrets.PASSWORD }}
           KC_BOOTSTRAP_ADMIN_USERNAME: ${{ secrets.ADMIN }}
           KC_BOOTSTRAP_ADMIN_PASSWORD: ${{ secrets.ADMIN }}
-        run: docker compose up -d --scale back=0
+        run: DOCKER_BUILDKIT=0 docker compose up -d --scale back=0
 
       - name: Recreate backend service
         env:
@@ -52,4 +52,4 @@ jobs:
           API_KEY: ${{ secrets.API_KEY }}
           USER: ${{ secrets.USER }}
           PASSWORD: ${{ secrets.PASSWORD }}
-        run: docker compose up -d --force-recreate --no-deps --build back
+        run: DOCKER_BUILDKIT=0 docker compose up -d --force-recreate --no-deps --build back
