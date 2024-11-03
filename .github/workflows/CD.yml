@@ -12,14 +12,14 @@ on:
 jobs:
   prepare-environment:
     runs-on: self-hosted
-    if: ${{ github.event.pull_request.merged }}
+    if: ${{or github.event.pull_request.merged github.event.push}} 
     steps:
       - name: Checkout into App Back
         uses: actions/checkout@v4
 
   deploy:
     runs-on: self-hosted
-    if: ${{ github.event.pull_request.merged }}
+    if: ${{or github.event.pull_request.merged github.event.push}} 
     needs: prepare-environment
     steps:
       - name: Up other services
