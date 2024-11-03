@@ -1,9 +1,6 @@
 name: Back CD
 
 on: 
-  push:
-    branches:
-      - master
   pull_request:
     types: [closed]
     branches:
@@ -12,7 +9,7 @@ on:
 jobs:
   prepare-environment:
     runs-on: self-hosted
-    if: ${{or github.event.pull_request.merged github.event.push}} 
+    if: ${{ github.event.pull_request.merged }} 
     steps:
       - name: Checkout into App Back
         uses: actions/checkout@v4
