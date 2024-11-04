@@ -12,7 +12,7 @@ spring:
       password: peculiar
 
   datasource:
-      url: jdbc:postgresql://${DB_URL}  #89.111.170.87:5432/nahual_visions
+      url: ${DB_URL}  #89.111.170.87:5432/nahual_visions
       username: peculiar
       driver-class-name: org.postgresql.Driver
       password: peculiar

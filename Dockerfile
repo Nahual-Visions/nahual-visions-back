@@ -2,7 +2,7 @@ FROM openjdk:21-slim
 
 WORKDIR /app
 
-COPY target/*.jar /app.jar
+COPY *.jar /app.jar
 
 EXPOSE 8085
 
