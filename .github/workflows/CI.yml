@@ -48,6 +48,9 @@ jobs:
           uses: actions/download-artifact@v4
           with:
             name: my-app
+
+        - name: SeeList
+          run: ls -la
   
         - name: Deploy to Server
           env:
