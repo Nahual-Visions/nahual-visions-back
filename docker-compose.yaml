@@ -19,9 +19,9 @@ services:
         - "8085:8085"
       depends_on:
         - postgres
-        - mongo
+        - mongodb
 
-  mongo:
+  mongodb:
     container_name: mongodb
     image: mongo:8.0.1
     environment:
@@ -39,7 +39,7 @@ services:
   mongo-express:
     image: mongo-express:1.0.2-20-alpine3.19
     depends_on:
-      - mongo
+      - mongodb
     networks:
       - nv-app
     environment:
