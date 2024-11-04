@@ -1,5 +1,0 @@
-# Created at 2024-11-02T19:19:05.677
-Boot Manifest-JAR contains absolute paths in classpath 'G:\TProject\nahual-visions-back\target\test-classes'
-Hint: <argLine>-Djdk.net.URLClassPath.disableClassPathURLCheck=true</argLine>
-'other' has different root
-
