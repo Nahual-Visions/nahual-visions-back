@@ -4,11 +4,11 @@ services:
     image: backend
     container_name: backend
     environment:
-      DB_URL: #postgres:5432/nahual_visions  # 89.111.170.87
-      JWK_SET_URI: #https://89.111.170.87:8443/realms/nahual_visions/protocol/openid-connect/certs
-      ISSUER_URI: #https://89.111.170.87:8443/realms/nahual_visions/
-      MG_URI: #mongodb://mongo:27017/nahual-visions
-      API_KEY: #YOUR_API_KEY
+      DB_URL:
+      JWK_SET_URI:
+      ISSUER_URI:
+      MG_URI:
+      API_KEY:
       USER:
       PASSWORD:
     ports:
