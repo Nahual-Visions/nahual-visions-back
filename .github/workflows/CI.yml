@@ -57,5 +57,5 @@ jobs:
             mkdir -p ~/.ssh
             ssh-keyscan -H $SERVER_IP >> ~/.ssh/known_hosts
             sudo apt-get install -y openssh-client
-            ssh -i private_key.pem $SERVER_USER@$SERVER_IP "mkdir -p /actions-runner/_work/nahual-visions-back/nahual-visions-back"
-            scp -i private_key.pem *.jar $SERVER_USER@$SERVER_IP:/actions-runner/_work/nahual-visions-back/nahual-visions-back
+            ssh -i private_key.pem $SERVER_USER@$SERVER_IP "mkdir -p ~/actions-runner/_work/nahual-visions-back/nahual-visions-back"
+            scp -i private_key.pem *.jar $SERVER_USER@$SERVER_IP:~/actions-runner/_work/nahual-visions-back/nahual-visions-back
