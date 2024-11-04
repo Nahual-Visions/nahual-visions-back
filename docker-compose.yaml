@@ -111,7 +111,6 @@ services:
 
 volumes:
   mon-data:
-  #  me-data:
   db-data:
   pgadmin:
 
