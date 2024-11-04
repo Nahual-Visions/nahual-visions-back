@@ -70,7 +70,7 @@ jobs:
   start:
     runs-on: self-hosted
     if: ${{ github.event.pull_request.merged }} 
-    needs: prepare-environment
+    needs: deploy
     steps:
       - name: Up other services
         env:
