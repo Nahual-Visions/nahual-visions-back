@@ -52,5 +52,9 @@ jobs:
             SERVER_USER: ${{ secrets.SERVER_USER }} 
             SERVER_KEY: ${{ secrets.SERVER_KEY }} 
           run: |
+            echo "$SERVER_KEY" > private_key.pem
+            chmod 600 private_key.pem
+            mkdir -p ~/.ssh
+            ssh-keyscan -H $SERVER_IP >> ~/.ssh/known_hosts
             sudo apt-get install -y openssh-client
-            scp -i $SERVER_KEY target/*.jar $SERVER_USER@$SERVER_IP:/actions-runner/_work/nahual-visions-back/nahual-visions-back
+            scp -i private_key.pem target/*.jar $SERVER_USER@$SERVER_IP:/actions-runner/_work/nahual-visions-back/nahual-visions-back
