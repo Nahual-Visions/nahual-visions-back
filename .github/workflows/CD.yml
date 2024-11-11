@@ -1,10 +1,6 @@
 name: Back CD
 
 on: 
-  push:
-    types: [closed]
-    branches:
-      - master
   pull_request:
     types: [closed]
     branches:
@@ -13,18 +9,20 @@ on:
 jobs:
   prepare-environment:
     runs-on: self-hosted
-    if: ${{ github.event.pull_request.merged }}
+    if: ${{ github.event.pull_request.merged }} 
     steps:
       - name: Checkout into App Back
         uses: actions/checkout@v4
 
   deploy:
     runs-on: self-hosted
-    if: ${{ github.event.pull_request.merged }}
+    if: ${{ github.event.pull_request.merged }} 
     needs: prepare-environment
     steps:
       - name: Up other services
         env:
+          DOCKER_BUILDKIT: 0
+          
           MONGO_INITDB_ROOT_USERNAME: ${{ secrets.USER }}
           MONGO_INITDB_ROOT_PASSWORD: ${{ secrets.PASSWORD }}
           
@@ -45,10 +43,13 @@ jobs:
           KC_DB_PASSWORD: ${{ secrets.PASSWORD }}
           KC_BOOTSTRAP_ADMIN_USERNAME: ${{ secrets.ADMIN }}
           KC_BOOTSTRAP_ADMIN_PASSWORD: ${{ secrets.ADMIN }}
-        run: docker compose up -d --scale back=0
+        run: |
+          docker compose up -d --scale back=0
 
       - name: Recreate backend service
         env:
+          DOCKER_BUILDKIT: 0
+        
           DB_URL: ${{ secrets.DB_URL }}
           JWK_SET_URI: ${{ secrets.JWK_SET_URI }}
           ISSUER_URI: ${{ secrets.ISSUER_URI }}
@@ -56,4 +57,5 @@ jobs:
           API_KEY: ${{ secrets.API_KEY }}
           USER: ${{ secrets.USER }}
           PASSWORD: ${{ secrets.PASSWORD }}
-        run: docker compose up -d --force-recreate --no-deps --build back
+        run: | 
+          docker compose up -d --force-recreate --no-deps back

@@ -1,25 +1,27 @@
 services:
   back:
-    build: .
-    image: backend
-    container_name: backend
-    environment:
-      DB_URL:
-      JWK_SET_URI:
-      ISSUER_URI:
-      MG_URI:
-      API_KEY: #YOUR_API_KEY
-      USER:
-      PASSWORD:
-    ports:
-      - "8085:8085"
-    networks:
-      - nv-app
-    depends_on:
-      - postgres
-      - mongo
+      build:
+        context: .
+        dockerfile: Dockerfile
+      image: backend
+      container_name: backend
+      networks:
+        - nv-app
+      environment:
+        DB_URL:
+        JWK_SET_URI:
+        ISSUER_URI:
+        MG_URI:
+        API_KEY:
+        USER:
+        PASSWORD:
+      ports:
+        - "8085:8085"
+      depends_on:
+        - postgres
+        - mongodb
 
-  mongo:
+  mongodb:
     container_name: mongodb
     image: mongo:8.0.1
     environment:
@@ -36,8 +38,9 @@ services:
 
   mongo-express:
     image: mongo-express:1.0.2-20-alpine3.19
+    container_name: mg_express 
     depends_on:
-      - mongo
+      - mongodb
     networks:
       - nv-app
     environment:
@@ -109,7 +112,6 @@ services:
 
 volumes:
   mon-data:
-  #  me-data:
   db-data:
   pgadmin:
 
