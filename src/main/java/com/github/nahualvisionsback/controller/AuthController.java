@@ -7,6 +7,7 @@ import com.github.nahualvisionsback.dto.RefreshJwtRequest;
 import com.github.nahualvisionsback.dto.RegistrationRequest;
 import com.github.nahualvisionsback.service.AuthService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
