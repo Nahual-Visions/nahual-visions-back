@@ -1,12 +1,14 @@
 package com.github.nahualvisionsback;
 
 import com.github.nahualvisionsback.controller.AboutController;
+import com.github.nahualvisionsback.dto.JwtRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -38,5 +40,14 @@ class NahualVisionsBackApplicationTests {
 				.andDo(print())
 				.andExpect(status().isOk())
 				.andExpect(content().string("OK"));
+	}
+
+	@Test
+	void login() throws Exception {
+		JwtRequest user = new JwtRequest("Ivan", "Ivan");
+		mockMvc.perform(post("/auth/login", user))
+				.andDo(print())
+				.andExpect(status().is4xxClientError())
+				.andExpect(content().string("Invalid username or password"));
 	}
 }
