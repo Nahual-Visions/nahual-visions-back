@@ -108,6 +108,8 @@ jobs:
           ISSUER_URI: ${{ secrets.ISSUER_URI }}
           MG_URI: ${{ secrets.MG_URI }}
           API_KEY: ${{ secrets.API_KEY }}
+          JWT_ACC: ${{ secrets.JWT_ACC }}
+          JWT_REF: ${{ secrets.JWT_REF }}
           USER: ${{ secrets.USER }}
           PASSWORD: ${{ secrets.PASSWORD }}
         run: | 
