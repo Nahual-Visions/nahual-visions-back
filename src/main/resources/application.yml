@@ -3,12 +3,12 @@ spring:
     hibernate:
       ddl-auto: update
 
-#  data:
-#    mongodb:
-#      uri: ${MG_URI}}  #mongodb://89.111.170.87:27017/nahual-visions
-#      username: peculiar
-#      password: peculiar
-#
+ data:
+   mongodb:
+     uri: ${MG_URI}  #mongodb://89.111.170.87:27017/nahual-visions
+     username: ${DB_USER}
+     password: ${DB_PASSWORD}
+
   datasource:
       url: ${DB_URL}  #89.111.170.87:5432/nahual_visions
       username: ${DB_USER}
