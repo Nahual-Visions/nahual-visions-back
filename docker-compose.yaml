@@ -83,33 +83,6 @@ services:
       - nv-app
     restart: unless-stopped
 
-#  keycloak:
-#    image: quay.io/keycloak/keycloak:26.0.2
-#    container_name: keycloak
-#    environment:
-#      KC_DB: postgres
-#      KC_DB_URL:
-#      KC_DB_USERNAME:
-#      KC_DB_PASSWORD:
-#      KC_BOOTSTRAP_ADMIN_USERNAME:
-#      KC_BOOTSTRAP_ADMIN_PASSWORD:
-#      KC_HOSTNAME_PORT: 8443
-#      KC_HTTPS_CERTIFICATE_FILE: /etc/x509/https/certs.pem
-#      KC_HTTPS_CERTIFICATE_KEY_FILE: /etc/x509/https/certs.key.pem
-#    command:
-#      ["start-dev"]
-#    volumes:
-#      - ~/keycloak/certs:/etc/x509/https
-#    ports:
-#      - "8080:8080"
-#      - "8443:8443"
-#    depends_on:
-#      - postgres
-#    networks:
-#      - nv-app
-#    restart: unless-stopped
-
-
 volumes:
   mon-data:
   db-data:
