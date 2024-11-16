@@ -19,9 +19,12 @@ public class UserService {
         return Optional.ofNullable(userRepository.findByUsernameAndEmail(username, email));
     }
 
-    public Optional<UserEntity> getByUser(@NotNull String authString) {
-        if (authString.contains("@")) return Optional.ofNullable(userRepository.findByEmail(authString));
-        return Optional.ofNullable(userRepository.findByUsername(authString));
+    public Optional<UserEntity> getByUser(@NotNull String username) {
+        return Optional.ofNullable(userRepository.findByUsername(username));
+    }
+
+    public Optional<UserEntity> getByEmail(@NotNull String email) {
+        return Optional.ofNullable(userRepository.findByEmail(email));
     }
 
     public Optional<UserEntity> getById(@NotNull UUID id) {
