@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
     private final AuthService authService;
 
-    @PostMapping("login")
+    @PostMapping(value = "login", consumes = "application/json")
     public ResponseEntity<JwtResponse> login (@RequestBody JwtRequest jwtRequest) throws AuthException {
         final JwtResponse token = authService.login(jwtRequest);
         return ResponseEntity.ok(token);

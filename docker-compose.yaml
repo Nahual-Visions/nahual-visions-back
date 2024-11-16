@@ -1,26 +1,4 @@
 services:
-  back:
-      build:
-        context: .
-        dockerfile: Dockerfile
-      image: backend
-      container_name: backend
-      networks:
-        - nv-app
-      environment:
-        DB_URL:
-        JWK_SET_URI:
-        ISSUER_URI:
-        MG_URI:
-        API_KEY:
-        USER:
-        PASSWORD:
-      ports:
-        - "8085:8085"
-      depends_on:
-        - postgres
-        - mongo
-
   mongo:
     container_name: mongodb
     image: mongo:8.0.1
