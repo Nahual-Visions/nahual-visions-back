@@ -49,6 +49,8 @@ class NahualVisionsBackApplicationTests {
 
 	@MockBean
 	private AuthService authService;
+	@MockBean
+	private UserService userService;
 
 
 	@BeforeEach
@@ -98,7 +100,7 @@ class NahualVisionsBackApplicationTests {
 
 	@Test
 	void anton() throws Exception {
-		mockMvc.perform(get("/anton"))
+		mockMvc.perform(get("/api/user/anton"))
 				.andDo(print())
 				.andExpect(status().isOk());
 	}
