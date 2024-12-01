@@ -4,18 +4,20 @@ import com.github.nahualvisionsback.config.JwtProvider;
 import com.github.nahualvisionsback.custexception.AuthException;
 import com.github.nahualvisionsback.dto.JwtRequest;
 import com.github.nahualvisionsback.dto.JwtResponse;
-import com.github.nahualvisionsback.dto.RefreshJwtRequest;
 import com.github.nahualvisionsback.dto.RegistrationRequest;
 import com.github.nahualvisionsback.entity.UserEntity;
 import groovyjarjarantlr4.v4.runtime.misc.NotNull;
 import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.Instant;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -49,7 +51,6 @@ public class AuthService {
                 .orElse(null);
         if (user == null) {
             user = new UserEntity().toBuilder()
-                    .id(UUID.randomUUID())
                     .username(request.getUsername())
                     .email(request.getEmail())
                     .passwordHash(passwordEncoder.encode(request.getPassword()))
@@ -65,14 +66,14 @@ public class AuthService {
         else throw new AuthException("User Already Exists");
     }
 
-    public JwtResponse generateNewAccessToken(@NotNull String refreshToken) throws AuthException {
+    public JwtResponse generateNewAccessToken(@NotNull String refreshToken) {
         if(jwtProvider.validateRefreshToken(refreshToken)) {
             final Claims claims = jwtProvider.getRefreshToken(refreshToken);
             final UUID userId = UUID.fromString(claims.getId());
             final String saveRefreshToken = refreshTokenStorage.get(userId);
             if (saveRefreshToken != null && saveRefreshToken.equals(refreshToken)) {
                 final UserEntity user = userService.getById(userId)
-                        .orElseThrow(() -> new AuthException("User Not Found"));
+                        .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "The user was not found"));
                 final String accessToken = jwtProvider.generateAccessToken(user);
                 return new JwtResponse(accessToken, null);
             }
@@ -80,21 +81,26 @@ public class AuthService {
         return new JwtResponse(null, null);
     }
 
-    public JwtResponse generateNewRefreshToken(@NotNull String refreshToken) throws AuthException {
+    public JwtResponse generateNewRefreshToken(@NotNull String refreshToken) {
         if(jwtProvider.validateRefreshToken(refreshToken)) {
            final Claims claims = jwtProvider.getRefreshToken(refreshToken);
            final UUID userId = UUID.fromString(claims.getId());
            final String saveRefreshToken = refreshTokenStorage.get(userId);
            if(saveRefreshToken != null && saveRefreshToken.equals(refreshToken)) {
                final UserEntity user = userService.getById(userId)
-                       .orElseThrow(() -> new AuthException("User Not Found"));
+                       .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "The user was not found"));
                final String accessToken = jwtProvider.generateAccessToken(user);
                final String newRefreshToken = jwtProvider.generateRefreshToken(user);
                refreshTokenStorage.put(user.getId(), newRefreshToken);
                return new JwtResponse(accessToken, newRefreshToken);
            }
         }
-        throw new AuthException("Invalid Refresh Token");
+        throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "UNAUTHORIZED");
+    }
+
+    public Optional<String> deleteTokens(@NotNull UUID userId) {
+        var token = refreshTokenStorage.remove(userId);
+        return Optional.ofNullable(token);
     }
 
 }
