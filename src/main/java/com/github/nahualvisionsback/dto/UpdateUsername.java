@@ -7,5 +7,5 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public class UpdateUsername {
-    private String newUsername;
+    private String username;
 }

@@ -38,7 +38,7 @@ public class UserController {
         if(authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
             final UserProfile user = userService.updateUsername(
                     authorizationHeader.substring(7),
-                    updateUsername.getNewUsername())
+                    updateUsername.getUsername())
                     .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Bad update username"));
             return ResponseEntity.ok(user);
         }
@@ -51,7 +51,7 @@ public class UserController {
         if(authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
             final UserProfile user = userService.updatePassword(
                             authorizationHeader.substring(7),
-                            updatePassword.getPassword())
+                            updatePassword)
                     .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Bad update password"));
             return ResponseEntity.ok(user);
         }

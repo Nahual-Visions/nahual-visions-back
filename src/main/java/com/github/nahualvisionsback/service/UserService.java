@@ -1,6 +1,7 @@
 package com.github.nahualvisionsback.service;
 
 import com.github.nahualvisionsback.config.JwtProvider;
+import com.github.nahualvisionsback.dto.UpdatePassword;
 import com.github.nahualvisionsback.dto.UserProfile;
 import com.github.nahualvisionsback.entity.UserEntity;
 import com.github.nahualvisionsback.repository.UserRepository;
@@ -59,12 +60,12 @@ public class UserService {
         return Optional.ofNullable(userProfile);
     }
 
-    public Optional<UserProfile> updatePassword(@NotNull String token, @NotNull String password) {
+    public Optional<UserProfile> updatePassword(@NotNull String token, @NotNull UpdatePassword passReq) {
         final UUID userId = getIdFromToken(token);
         UserProfile userProfile = null;
         UserEntity user = userRepository.findById(userId);
-        if(user != null) {
-            user.setPasswordHash(passwordEncoder.encode(password));
+        if((user != null) && (passwordEncoder.matches(passReq.getOldPassword(), user.getPasswordHash()))) {
+            user.setPasswordHash(passwordEncoder.encode(passReq.getNewPassword()));
             userRepository.save(user);
             userProfile = new UserProfile(user);
         }
