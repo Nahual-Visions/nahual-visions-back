@@ -7,11 +7,9 @@ import com.github.nahualvisionsback.dto.RefreshJwtRequest;
 import com.github.nahualvisionsback.dto.RegistrationRequest;
 import com.github.nahualvisionsback.service.AuthService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/auth")
@@ -19,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
     private final AuthService authService;
 
-    @PostMapping("login")
+    @PostMapping(value = "login", consumes = "application/json")
     public ResponseEntity<JwtResponse> login (@RequestBody JwtRequest jwtRequest) throws AuthException {
         final JwtResponse token = authService.login(jwtRequest);
         return ResponseEntity.ok(token);
@@ -43,4 +41,8 @@ public class AuthController {
         return ResponseEntity.ok(token);
     }
 
+    @GetMapping("refresh-error")
+    public ResponseEntity<Object> testError() {
+        return ResponseEntity.internalServerError().body("Ошибка сын ты сучий!!!");
+    }
 }

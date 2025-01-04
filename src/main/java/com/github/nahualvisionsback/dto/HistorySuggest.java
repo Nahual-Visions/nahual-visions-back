@@ -5,8 +5,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class JwtRequest {
-    private String username;
-    private String email;
-    private String password;
+public class HistorySuggest {
+    String historyId;
+    String suggest;
 }

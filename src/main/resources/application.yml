@@ -2,24 +2,22 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
-
- data:
-   mongodb:
-     uri: ${MG_URI}  #mongodb://89.111.170.87:27017/nahual-visions
-     username: ${DB_USER}
-     password: ${DB_PASSWORD}
+#  data:
+#    mongodb:
+#      uri: ${MG_URI}  #mongodb://89.111.170.87:27017/nahual-visions
+#      username: ${DB_USER}
+#      password: ${DB_PASSWORD}
 
   datasource:
-      url: ${DB_URL}  #89.111.170.87:5432/nahual_visions
-      username: ${DB_USER}
-      driver-class-name: org.postgresql.Driver
-      password: ${DB_PASSWORD}
+    url: ${DB_URL}  #89.111.170.87:5432/nahual_visions
+    username: ${DB_USER}
+    driver-class-name: org.postgresql.Driver
+    password: ${DB_PASSWORD}
   liquibase:
     change-log: classpath:db/changelog-master.xml
   ai:
     openai:
       api-key: ${API_KEY}
-
   jwt:
     secret:
       access: ${JWT_ACC}

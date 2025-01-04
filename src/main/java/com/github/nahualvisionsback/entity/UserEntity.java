@@ -38,6 +38,9 @@ public class UserEntity {
     @Column(name = "email", nullable = false)
     private String email;
 
+    @Column(name = "avatar_url")
+    private String avatarUrl;
+
     @Column(name = "authentication")
     @JdbcTypeCode(SqlTypes.JSON)
     private Map<String, Object> authentication;

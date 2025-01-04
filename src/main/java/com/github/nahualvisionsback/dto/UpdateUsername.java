@@ -2,11 +2,10 @@ package com.github.nahualvisionsback.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
-@AllArgsConstructor
-public class JwtRequest {
+@NoArgsConstructor
+public class UpdateUsername {
     private String username;
-    private String email;
-    private String password;
 }
