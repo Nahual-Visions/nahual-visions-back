@@ -45,5 +45,4 @@ public class AuthController {
     public ResponseEntity<Object> testError() {
         return ResponseEntity.internalServerError().body("Ошибка сын ты сучий!!!");
     }
-
 }

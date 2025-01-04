@@ -30,4 +30,18 @@
         </createTable>
     </changeSet>
 
+    <changeSet id="create-table-history" author="Peculiar">
+        <createTable tableName="history">
+            <column name="id" type="uuid" defaultValueComputed="gen_random_uuid()">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="user_id" type="uuid">
+                <constraints nullable="false" foreignKeyName="fk_user_id" references="user(id)"/>
+            </column>
+            <column name="response" type="varchar(255)"/>
+            <column name="timestamp" type="timestamp" defaultValueComputed="CURRENT_TIMESTAMP"/>
+            <column name="success" type="boolean"/>
+        </createTable>
+    </changeSet>
+
 </databaseChangeLog>
